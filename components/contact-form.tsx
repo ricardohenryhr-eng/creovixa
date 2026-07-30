@@ -13,7 +13,12 @@ const inquiryTypes = [
 ]
 
 const contactDetails = [
-  { icon: Mail, label: 'Email', value: 'hello@creovixa.com' },
+  {
+    icon: Mail,
+    label: 'Email',
+    value: 'info@creovixa.com',
+    href: 'mailto:info@creovixa.com',
+  },
   { icon: Phone, label: 'Phone', value: '+1 (800) 555-0142' },
   { icon: MapPin, label: 'Office', value: 'Global · Remote-first' },
 ]
@@ -55,9 +60,18 @@ export function ContactForm() {
                     <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                       {detail.label}
                     </p>
-                    <p className="text-sm font-semibold text-foreground">
-                      {detail.value}
-                    </p>
+                    {detail.href ? (
+                      <a
+                        href={detail.href}
+                        className="text-sm font-semibold text-foreground transition-colors hover:text-primary"
+                      >
+                        {detail.value}
+                      </a>
+                    ) : (
+                      <p className="text-sm font-semibold text-foreground">
+                        {detail.value}
+                      </p>
+                    )}
                   </div>
                 </li>
               ))}

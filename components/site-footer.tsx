@@ -7,6 +7,7 @@ const footerGroups = [
       { label: 'About Us', href: '#about' },
       { label: 'Services', href: '#services' },
       { label: 'Contact', href: '#contact' },
+      { label: 'info@creovixa.com', href: 'mailto:info@creovixa.com' },
     ],
   },
   {
