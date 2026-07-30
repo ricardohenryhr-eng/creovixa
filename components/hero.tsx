@@ -47,7 +47,7 @@ export function Hero() {
                 'h-12 px-6 text-base',
               )}
             >
-              Join Interpreter Network
+              Join Our Interpreter Network
             </a>
           </div>
 

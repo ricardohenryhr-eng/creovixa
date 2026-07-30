@@ -1,9 +1,12 @@
 import { SiteHeader } from '@/components/site-header'
 import { Hero } from '@/components/hero'
 import { Services } from '@/components/services'
+import { HowItWorks } from '@/components/how-it-works'
 import { Industries } from '@/components/industries'
 import { About } from '@/components/about'
+import { Testimonials } from '@/components/testimonials'
 import { ContactForm } from '@/components/contact-form'
+import { CallToAction } from '@/components/cta'
 import { SiteFooter } from '@/components/site-footer'
 
 export default function Page() {
@@ -13,9 +16,12 @@ export default function Page() {
       <main className="flex-1">
         <Hero />
         <Services />
+        <HowItWorks />
         <Industries />
         <About />
+        <Testimonials />
         <ContactForm />
+        <CallToAction />
       </main>
       <SiteFooter />
     </div>

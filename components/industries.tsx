@@ -27,7 +27,7 @@ const industries = [
   },
   {
     icon: Building2,
-    title: 'Businesses',
+    title: 'Business',
     description:
       'Enterprises expand globally with interpreters who bridge language and cultural gaps.',
   },
