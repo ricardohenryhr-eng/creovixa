@@ -1,13 +1,14 @@
-import { Globe } from 'lucide-react'
+import Link from 'next/link'
+import { Mail, Phone } from 'lucide-react'
 
 const footerGroups = [
   {
     heading: 'Company',
     links: [
-      { label: 'About Us', href: '#about' },
-      { label: 'Services', href: '#services' },
-      { label: 'Contact', href: '#contact' },
-      { label: 'info@creovixa.com', href: 'mailto:info@creovixa.com' },
+      { label: 'About Us', href: '/about' },
+      { label: 'Services', href: '/services' },
+      { label: 'Become an Interpreter', href: '/become-an-interpreter' },
+      { label: 'FAQ', href: '/faq' },
     ],
   },
   {
@@ -15,6 +16,7 @@ const footerGroups = [
     links: [
       { label: 'Privacy Policy', href: '#' },
       { label: 'Terms of Service', href: '#' },
+      { label: 'Contact Us', href: '/contact' },
     ],
   },
 ]
@@ -25,19 +27,38 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <a href="#top" className="flex items-center gap-2">
-              <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Globe className="size-5" aria-hidden="true" />
-              </span>
-              <span className="font-display text-lg font-bold tracking-tight text-foreground">
-                Creovixa
-              </span>
-            </a>
+            <Link href="/" className="flex items-center gap-2">
+              <img
+                src="/creovixa-logo.png"
+                alt="Creovixa Language Services"
+                className="h-10 w-auto"
+              />
+            </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Connecting people through language. Qualified professional
-              interpreters, delivered through secure technology for healthcare,
-              legal, government, and business.
+              Bridging languages, connecting people. Qualified professional
+              interpreters and translators, delivered through secure technology
+              for healthcare, legal, government, and business.
             </p>
+            <ul className="mt-6 space-y-3">
+              <li>
+                <a
+                  href="mailto:info@creovixa.com"
+                  className="flex items-center gap-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <Mail className="size-4 text-primary" aria-hidden="true" />
+                  info@creovixa.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+18495348654"
+                  className="flex items-center gap-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <Phone className="size-4 text-primary" aria-hidden="true" />
+                  +1 849-534-8654
+                </a>
+              </li>
+            </ul>
           </div>
 
           {footerGroups.map((group) => (
@@ -48,12 +69,12 @@ export function SiteFooter() {
               <ul className="mt-4 space-y-3">
                 {group.links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
                       className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -63,10 +84,11 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Creovixa. All rights reserved.
+            &copy; {new Date().getFullYear()} Creovixa Language Services. All
+            rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
-            Connecting People Through Language
+            Bridging Languages, Connecting People.
           </p>
         </div>
       </div>
