@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
@@ -25,8 +26,8 @@ export function CallToAction() {
               barriers.
             </p>
             <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 className={cn(
                   buttonVariants({ variant: 'secondary' }),
                   'h-12 bg-background px-6 text-base text-foreground hover:bg-background/90',
@@ -34,16 +35,16 @@ export function CallToAction() {
               >
                 Request an Interpreter
                 <ArrowRight className="size-4" aria-hidden="true" />
-              </a>
-              <a
-                href="#contact"
+              </Link>
+              <Link
+                href="/become-an-interpreter"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
                   'h-12 border-primary-foreground/40 bg-transparent px-6 text-base text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground',
                 )}
               >
                 Join Our Interpreter Network
-              </a>
+              </Link>
             </div>
           </div>
         </div>

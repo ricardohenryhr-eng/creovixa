@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
-import { Mail, Phone, MapPin, CheckCircle2, Send } from 'lucide-react'
+import { Mail, Phone, Clock, CheckCircle2, Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
@@ -19,8 +19,17 @@ const contactDetails = [
     value: 'info@creovixa.com',
     href: 'mailto:info@creovixa.com',
   },
-  { icon: Phone, label: 'Phone', value: '+1 (800) 555-0142' },
-  { icon: MapPin, label: 'Office', value: 'Global · Remote-first' },
+  {
+    icon: Phone,
+    label: 'Phone',
+    value: '+1 849-534-8654',
+    href: 'tel:+18495348654',
+  },
+  {
+    icon: Clock,
+    label: 'Business hours',
+    value: 'Mon–Fri, 8:00 AM–8:00 PM (EST) · Interpreters available 24/7',
+  },
 ]
 
 const fieldClass =
@@ -40,7 +49,7 @@ export function ContactForm() {
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-14">
           <div className="lg:col-span-2">
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-              Contact Us
+              Get in touch
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
               Let&apos;s start the conversation
