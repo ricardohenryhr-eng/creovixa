@@ -34,6 +34,9 @@ export const metadata: Metadata = {
       'Qualified professional interpreters for healthcare, legal, government, and business, delivered through secure technology.',
     type: 'website',
   },
+  verification: {
+    google: 'WTVzVArtWE5ERu9VKut4npz-K1bwbSecXPLu...',
+  },
 }
 
 export const viewport: Viewport = {
