@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { ArrowRight, ShieldCheck, Globe2, Clock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
@@ -31,8 +30,8 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact"
+            <a
+              href="#contact"
               className={cn(
                 buttonVariants({ variant: 'default' }),
                 'h-12 px-6 text-base',
@@ -40,16 +39,16 @@ export function Hero() {
             >
               Request an Interpreter
               <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/become-an-interpreter"
+            </a>
+            <a
+              href="#contact"
               className={cn(
                 buttonVariants({ variant: 'outline' }),
                 'h-12 px-6 text-base',
               )}
             >
               Join Our Interpreter Network
-            </Link>
+            </a>
           </div>
 
           <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-border pt-8">
