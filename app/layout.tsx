@@ -16,7 +16,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://creovixa.com'),
+  metadataBase: new URL('https://www.creovixa.com'),
   title: 'Creovixa | Professional Interpretation Services',
   description:
     'Creovixa connects organizations and individuals with qualified professional interpreters through secure technology. Medical, legal, business, and remote interpretation worldwide.',

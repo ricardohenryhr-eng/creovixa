@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { serviceSlugs } from '@/lib/services-data'
 
-const SITE_URL = 'https://creovixa.com'
+const SITE_URL = 'https://www.creovixa.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()
