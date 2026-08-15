@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Mail, Phone } from 'lucide-react'
+import { SiteLogo } from '@/components/site-logo'
 
 const footerGroups = [
   {
@@ -27,12 +28,8 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2">
-              <img
-                src="/creovixa-logo.png"
-                alt="Creovixa Language Services"
-                className="h-10 w-auto"
-              />
+            <Link href="/" aria-label="Creovixa Language Services home">
+              <SiteLogo markClassName="h-10" nameClassName="text-2xl" />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Bridging languages, connecting people. Qualified professional
