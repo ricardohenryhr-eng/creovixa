@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { SiteLogo } from '@/components/site-logo'
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -26,12 +27,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <img
-            src="/creovixa-logo.png"
-            alt="Creovixa Language Services"
-            className="h-9 w-auto"
-          />
+        <Link href="/" aria-label="Creovixa Language Services home">
+          <SiteLogo />
         </Link>
 
         <nav
