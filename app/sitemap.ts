@@ -6,6 +6,36 @@ const routes = [
   { path: '/', priority: 1, changeFrequency: 'weekly' as const },
   { path: '/about', priority: 0.8, changeFrequency: 'monthly' as const },
   { path: '/services', priority: 0.9, changeFrequency: 'monthly' as const },
+  {
+    path: '/french-interpretation-services',
+    priority: 0.9,
+    changeFrequency: 'monthly' as const,
+  },
+  {
+    path: '/haitian-creole-interpretation-services',
+    priority: 0.9,
+    changeFrequency: 'monthly' as const,
+  },
+  {
+    path: '/medical-interpretation-services',
+    priority: 0.9,
+    changeFrequency: 'monthly' as const,
+  },
+  {
+    path: '/legal-interpretation-services',
+    priority: 0.9,
+    changeFrequency: 'monthly' as const,
+  },
+  {
+    path: '/video-remote-interpretation',
+    priority: 0.9,
+    changeFrequency: 'monthly' as const,
+  },
+  {
+    path: '/over-the-phone-interpretation',
+    priority: 0.9,
+    changeFrequency: 'monthly' as const,
+  },
   { path: '/contact', priority: 0.7, changeFrequency: 'monthly' as const },
   {
     path: '/become-an-interpreter',
