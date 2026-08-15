@@ -1,6 +1,6 @@
-import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
+import { CookieConsent } from '@/components/cookie-consent'
 import './globals.css'
 
 const inter = Inter({
@@ -54,7 +54,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <CookieConsent />
       </body>
     </html>
   )

@@ -1,4 +1,5 @@
 import { Globe } from 'lucide-react'
+import { CookiePreferencesButton } from '@/components/cookie-preferences-button'
 
 const footerGroups = [
   {
@@ -29,13 +30,20 @@ const footerGroups = [
       { label: 'info@creovixa.com', href: 'mailto:info@creovixa.com' },
     ],
   },
+  {
+    heading: 'Legal',
+    links: [
+      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Cookie Policy', href: '/cookie-policy' },
+    ],
+  },
 ]
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <a href="/" className="flex items-center gap-2">
               <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
@@ -68,6 +76,11 @@ export function SiteFooter() {
                     </a>
                   </li>
                 ))}
+                {group.heading === 'Legal' ? (
+                  <li>
+                    <CookiePreferencesButton />
+                  </li>
+                ) : null}
               </ul>
             </div>
           ))}
