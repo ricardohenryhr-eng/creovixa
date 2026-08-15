@@ -1,9 +1,18 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
-import { Mail, Phone, Clock, CheckCircle2, Send } from 'lucide-react'
+import { useRef, useState, type FormEvent } from 'react'
+import { Mail, Phone, MapPin, CheckCircle2, Send } from 'lucide-react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { verifyCaptcha } from '@/app/actions/verify-captcha'
+
+// Uses the real production site key from NEXT_PUBLIC_RECAPTCHA_SITE_KEY.
+// Falls back to Google's public test key so the widget still renders in
+// preview/dev before the production key is configured.
+const RECAPTCHA_SITE_KEY =
+  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ??
+  '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 
 const inquiryTypes = [
   'Request an interpreter',
@@ -19,17 +28,8 @@ const contactDetails = [
     value: 'info@creovixa.com',
     href: 'mailto:info@creovixa.com',
   },
-  {
-    icon: Phone,
-    label: 'Phone',
-    value: '+1 849-534-8654',
-    href: 'tel:+18495348654',
-  },
-  {
-    icon: Clock,
-    label: 'Business hours',
-    value: 'Mon–Fri, 8:00 AM–8:00 PM (EST) · Interpreters available 24/7',
-  },
+  { icon: Phone, label: 'Phone', value: '+1 (849) 534-8654' },
+  { icon: MapPin, label: 'Office', value: 'Global · Remote-first' },
 ]
 
 const fieldClass =
@@ -37,10 +37,39 @@ const fieldClass =
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaError, setCaptchaError] = useState<string | null>(null)
+  const recaptchaRef = useRef<ReCAPTCHA>(null)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+
+    if (!captchaToken) {
+      setCaptchaError('Please complete the CAPTCHA to verify you\u2019re not a robot.')
+      return
+    }
+
+    setSubmitting(true)
+    const result = await verifyCaptcha(captchaToken)
+    setSubmitting(false)
+
+    if (!result.success) {
+      setCaptchaError(result.error ?? 'CAPTCHA verification failed. Please try again.')
+      setCaptchaToken(null)
+      recaptchaRef.current?.reset()
+      return
+    }
+
+    setCaptchaError(null)
     setSubmitted(true)
+  }
+
+  function handleReset() {
+    setSubmitted(false)
+    setCaptchaToken(null)
+    setCaptchaError(null)
+    recaptchaRef.current?.reset()
   }
 
   return (
@@ -49,7 +78,7 @@ export function ContactForm() {
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-14">
           <div className="lg:col-span-2">
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-              Get in touch
+              Contact Us
             </p>
             <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
               Let&apos;s start the conversation
@@ -103,7 +132,7 @@ export function ContactForm() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => setSubmitted(false)}
+                    onClick={handleReset}
                     className={cn(
                       buttonVariants({ variant: 'outline' }),
                       'mt-6 h-10 px-5',
@@ -180,7 +209,7 @@ export function ContactForm() {
                         name="phone"
                         type="tel"
                         autoComplete="tel"
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="+1 (849) 534-8654"
                         className={fieldClass}
                       />
                     </div>
@@ -228,14 +257,35 @@ export function ContactForm() {
                     />
                   </div>
 
+                  <div className="flex flex-col gap-1.5">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={RECAPTCHA_SITE_KEY}
+                      onChange={(token) => {
+                        setCaptchaToken(token)
+                        if (token) setCaptchaError(null)
+                      }}
+                      onExpired={() => setCaptchaToken(null)}
+                    />
+                    {captchaError ? (
+                      <p
+                        role="alert"
+                        className="text-sm font-medium text-destructive"
+                      >
+                        {captchaError}
+                      </p>
+                    ) : null}
+                  </div>
+
                   <button
                     type="submit"
+                    disabled={submitting}
                     className={cn(
                       buttonVariants({ variant: 'default' }),
                       'h-12 px-6 text-base',
                     )}
                   >
-                    Send message
+                    {submitting ? 'Verifying\u2026' : 'Send message'}
                     <Send className="size-4" aria-hidden="true" />
                   </button>
                   <p className="text-xs text-muted-foreground">
