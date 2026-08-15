@@ -22,5 +22,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...home, ...servicePages]
+  const legalPages: MetadataRoute.Sitemap = [
+    'privacy-policy',
+    'cookie-policy',
+  ].map((slug) => ({
+    url: `${SITE_URL}/${slug}`,
+    lastModified,
+    changeFrequency: 'yearly',
+    priority: 0.3,
+  }))
+
+  return [...home, ...servicePages, ...legalPages]
 }
