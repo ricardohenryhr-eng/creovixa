@@ -2,19 +2,31 @@ import { Globe } from 'lucide-react'
 
 const footerGroups = [
   {
-    heading: 'Company',
+    heading: 'Services',
     links: [
-      { label: 'About Us', href: '#about' },
-      { label: 'Services', href: '#services' },
-      { label: 'Contact', href: '#contact' },
-      { label: 'info@creovixa.com', href: 'mailto:info@creovixa.com' },
+      { label: 'French Interpretation', href: '/french-interpretation-services' },
+      {
+        label: 'Haitian Creole Interpretation',
+        href: '/haitian-creole-interpretation-services',
+      },
+      { label: 'Medical Interpretation', href: '/medical-interpretation-services' },
+      { label: 'Legal Interpretation', href: '/legal-interpretation-services' },
+      { label: 'Video Remote Interpretation', href: '/video-remote-interpretation' },
+      {
+        label: 'Over-the-Phone Interpretation',
+        href: '/over-the-phone-interpretation',
+      },
     ],
   },
   {
-    heading: 'Legal',
+    heading: 'Company',
     links: [
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Service', href: '#' },
+      { label: 'Home', href: '/' },
+      { label: 'About Us', href: '/#about' },
+      { label: 'Services', href: '/#services' },
+      { label: 'Contact', href: '/#contact' },
+      { label: 'Become an Interpreter', href: '/#contact' },
+      { label: 'info@creovixa.com', href: 'mailto:info@creovixa.com' },
     ],
   },
 ]
@@ -25,7 +37,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <a href="#top" className="flex items-center gap-2">
+            <a href="/" className="flex items-center gap-2">
               <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                 <Globe className="size-5" aria-hidden="true" />
               </span>

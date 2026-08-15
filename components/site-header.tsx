@@ -6,11 +6,11 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
 const navLinks = [
-  { label: 'Services', href: '#services' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Industries', href: '#industries' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services', href: '/#services' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Industries', href: '/#industries' },
+  { label: 'Testimonials', href: '/#testimonials' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
 export function SiteHeader() {
@@ -19,7 +19,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-24 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#top" className="flex shrink-0 items-center gap-2">
+        <a href="/" className="flex shrink-0 items-center gap-2">
           <img
             src="/creovixa-logo.png"
             alt="Creovixa Language Services"
@@ -41,13 +41,13 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href="#contact"
+            href="/#contact"
             className={cn(buttonVariants({ variant: 'ghost' }), 'h-10 px-4')}
           >
             Join Network
           </a>
           <a
-            href="#contact"
+            href="/#contact"
             className={cn(buttonVariants({ variant: 'default' }), 'h-10 px-5')}
           >
             Request an Interpreter
@@ -86,7 +86,7 @@ export function SiteHeader() {
               </a>
             ))}
             <a
-              href="#contact"
+              href="/#contact"
               onClick={() => setOpen(false)}
               className={cn(
                 buttonVariants({ variant: 'default' }),
