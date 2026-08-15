@@ -7,12 +7,14 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { verifyCaptcha } from '@/app/actions/verify-captcha'
 
-// Uses the real production site key from NEXT_PUBLIC_RECAPTCHA_SITE_KEY.
-// Falls back to Google's public test key so the widget still renders in
-// preview/dev before the production key is configured.
-const RECAPTCHA_SITE_KEY =
-  process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ??
-  '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+// Google's public test key — only used as a last-resort fallback so the
+// widget still renders in preview/dev before a real key is configured.
+const RECAPTCHA_TEST_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+
+// The site key is safe to expose client-side. Prefer a build-time
+// NEXT_PUBLIC_RECAPTCHA_SITE_KEY when present; otherwise the server passes the
+// project's RECAPTCHA_SITE_KEY down via the `siteKey` prop.
+const PUBLIC_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 const inquiryTypes = [
   'Request an interpreter',
@@ -35,7 +37,9 @@ const contactDetails = [
 const fieldClass =
   'w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-ring focus:ring-2 focus:ring-ring/30'
 
-export function ContactForm() {
+export function ContactForm({ siteKey }: { siteKey?: string }) {
+  const recaptchaSiteKey = PUBLIC_SITE_KEY ?? siteKey ?? RECAPTCHA_TEST_KEY
+
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
@@ -260,7 +264,7 @@ export function ContactForm() {
                   <div className="flex flex-col gap-1.5">
                     <ReCAPTCHA
                       ref={recaptchaRef}
-                      sitekey={RECAPTCHA_SITE_KEY}
+                      sitekey={recaptchaSiteKey}
                       onChange={(token) => {
                         setCaptchaToken(token)
                         if (token) setCaptchaError(null)

@@ -12,6 +12,11 @@ import { CallToAction } from '@/components/cta'
 import { SiteFooter } from '@/components/site-footer'
 
 export default function Page() {
+  // reCAPTCHA site keys are public; resolve on the server so the connected
+  // RECAPTCHA_SITE_KEY works without needing a NEXT_PUBLIC_ duplicate.
+  const recaptchaSiteKey =
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? process.env.RECAPTCHA_SITE_KEY
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -24,7 +29,7 @@ export default function Page() {
         <Languages />
         <About />
         <Testimonials />
-        <ContactForm />
+        <ContactForm siteKey={recaptchaSiteKey} />
         <CallToAction />
       </main>
       <SiteFooter />
