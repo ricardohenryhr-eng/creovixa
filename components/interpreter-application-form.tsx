@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
-import { CheckCircle2, Send } from 'lucide-react'
+import { CheckCircle2, Loader2, Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
@@ -17,10 +17,39 @@ const fieldClass =
 
 export function InterpreterApplicationForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setSubmitted(true)
+    const form = event.currentTarget
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      const response = await fetch('/api/interpreter-application', {
+        method: 'POST',
+        body: new FormData(form),
+      })
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null
+        throw new Error(data?.error ?? 'Something went wrong. Please try again.')
+      }
+
+      form.reset()
+      setSubmitted(true)
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Something went wrong. Please try again.',
+      )
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -243,15 +272,34 @@ export function InterpreterApplicationForm() {
         </span>
       </label>
 
+      {error ? (
+        <p
+          role="alert"
+          className="rounded-lg border border-destructive/30 bg-destructive/10 px-3.5 py-2.5 text-sm text-destructive"
+        >
+          {error}
+        </p>
+      ) : null}
+
       <button
         type="submit"
+        disabled={submitting}
         className={cn(
           buttonVariants({ variant: 'default' }),
-          'h-12 px-6 text-base',
+          'h-12 px-6 text-base disabled:cursor-not-allowed disabled:opacity-70',
         )}
       >
-        Submit application
-        <Send className="size-4" aria-hidden="true" />
+        {submitting ? (
+          <>
+            Sending…
+            <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+          </>
+        ) : (
+          <>
+            Submit application
+            <Send className="size-4" aria-hidden="true" />
+          </>
+        )}
       </button>
       <p className="text-xs text-muted-foreground">
         By submitting, you agree to our Privacy Policy. We&apos;ll only use your
