@@ -157,6 +157,43 @@ export function InterpreterApplicationForm() {
         </div>
       </div>
 
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="location" className="text-sm font-medium text-foreground">
+            Location & time zone
+          </label>
+          <input
+            id="location"
+            name="location"
+            type="text"
+            required
+            autoComplete="address-level2"
+            placeholder="e.g. Miami, FL (EST)"
+            className={fieldClass}
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="availability" className="text-sm font-medium text-foreground">
+            Availability
+          </label>
+          <select
+            id="availability"
+            name="availability"
+            required
+            defaultValue=""
+            className={fieldClass}
+          >
+            <option value="" disabled>
+              Select availability
+            </option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>On-call / as needed</option>
+            <option>Weekends only</option>
+          </select>
+        </div>
+      </div>
+
       <div className="flex flex-col gap-1.5">
         <label htmlFor="certifications" className="text-sm font-medium text-foreground">
           Certifications & specializations
@@ -169,6 +206,42 @@ export function InterpreterApplicationForm() {
           className={cn(fieldClass, 'resize-none')}
         />
       </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="resume" className="text-sm font-medium text-foreground">
+          Résumé / CV
+        </label>
+        <input
+          id="resume"
+          name="resume"
+          type="file"
+          accept=".pdf,.doc,.docx"
+          className={cn(
+            fieldClass,
+            'file:mr-3 file:rounded-md file:border-0 file:bg-primary/10 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/15',
+          )}
+        />
+        <p className="text-xs text-muted-foreground">
+          PDF, DOC, or DOCX. Max 5MB.
+        </p>
+      </div>
+
+      <label
+        htmlFor="consent"
+        className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"
+      >
+        <input
+          id="consent"
+          name="consent"
+          type="checkbox"
+          required
+          className="mt-0.5 size-4 shrink-0 rounded border-input text-primary accent-primary focus:ring-2 focus:ring-ring/30"
+        />
+        <span>
+          I confirm the information provided is accurate and consent to Creovixa
+          Language Services reviewing my application.
+        </span>
+      </label>
 
       <button
         type="submit"
