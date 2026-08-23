@@ -41,7 +41,7 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-3 md:flex">
           <a
-            href="/#contact"
+            href="/join-network"
             className={cn(buttonVariants({ variant: 'ghost' }), 'h-10 px-4')}
           >
             Join Network
