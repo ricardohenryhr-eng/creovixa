@@ -4,7 +4,7 @@ import { Resend } from 'resend'
 export const runtime = 'nodejs'
 
 const MAX_RESUME_BYTES = 5 * 1024 * 1024 // 5MB
-const TO_EMAIL = process.env.TO_EMAIL || 'info@creovixa.com'
+const TO_EMAIL = 'info@creovixa.com'
 const FROM_EMAIL = 'Creovixa Applications <no-reply@creovixa.com>'
 
 function escapeHtml(value: string) {
