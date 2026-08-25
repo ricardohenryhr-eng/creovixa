@@ -40,10 +40,11 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protect all /admin routes except the login page itself.
+  // Protect all /admin routes except the auth pages themselves.
   const { pathname } = request.nextUrl
-  const isAdminArea =
-    pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')
+  const isAuthPage =
+    pathname.startsWith('/admin/login') || pathname.startsWith('/admin/sign-up')
+  const isAdminArea = pathname.startsWith('/admin') && !isAuthPage
 
   if (isAdminArea && !user) {
     const url = request.nextUrl.clone()
