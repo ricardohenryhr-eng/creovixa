@@ -4,7 +4,6 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { AppChrome } from '@/components/app-chrome'
 import './globals.css'
 
 const inter = Inter({
@@ -66,9 +65,11 @@ export default function RootLayout({
       className={`light ${inter.variable} ${spaceGrotesk.variable} bg-background`}
     >
       <body className="font-sans antialiased">
-        <AppChrome header={<SiteHeader />} footer={<SiteFooter />}>
-          {children}
-        </AppChrome>
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader />
+          <main className="flex-1">{children}</main>
+          <SiteFooter />
+        </div>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
       <GoogleAnalytics gaId="G-DR34EN8CZJ" />
