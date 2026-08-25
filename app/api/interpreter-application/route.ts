@@ -5,7 +5,7 @@ import { createServiceClient } from '@/lib/supabase/service'
 export const runtime = 'nodejs'
 
 const MAX_RESUME_BYTES = 5 * 1024 * 1024 // 5MB
-const TO_EMAIL = 'info@creovixa.com'
+const TO_EMAIL = ['info@creovixa.com', 'recruitement@creovixa.com']
 const FROM_EMAIL = 'Creovixa Applications <no-reply@creovixa.com>'
 
 function escapeHtml(value: string) {
