@@ -7,6 +7,9 @@ export const runtime = 'nodejs'
 const MAX_RESUME_BYTES = 5 * 1024 * 1024 // 5MB
 const TO_EMAIL = ['info@creovixa.com', 'recruitement@creovixa.com']
 const FROM_EMAIL = 'Creovixa Applications <no-reply@creovixa.com>'
+const FROM_RECRUITMENT = 'Creovixa Recruitment Team <recruitement@creovixa.com>'
+const SITE_URL = 'https://www.creovixa.com'
+const LOGO_URL = `${SITE_URL}/creovixa-logo.png`
 
 function escapeHtml(value: string) {
   return value
@@ -136,12 +139,103 @@ export async function POST(request: Request) {
     )
   }
 
+  // Best-effort: send the applicant a branded confirmation email. A failure
+  // here must never fail the submission, since the notification above (the
+  // primary delivery path) already succeeded.
+  try {
+    const { error: confirmError } = await resend.emails.send({
+      from: FROM_RECRUITMENT,
+      to: fields.email,
+      replyTo: 'recruitement@creovixa.com',
+      subject: 'Application Received – Creovixa Language Services',
+      html: buildApplicantConfirmationHtml(),
+      text: buildApplicantConfirmationText(),
+    })
+    if (confirmError) {
+      console.log('[v0] Applicant confirmation email error:', confirmError)
+    }
+  } catch (err) {
+    console.log(
+      '[v0] Applicant confirmation unexpected error:',
+      err instanceof Error ? err.message : String(err),
+    )
+  }
+
   // Best-effort: also record the applicant in the admin interpreter database.
   // The email above is the primary delivery path, so DB/storage issues here
   // must never fail the applicant's submission.
   await saveApplicantRecord(fields, resumeFile, resumeBuffer)
 
   return NextResponse.json({ ok: true })
+}
+
+function buildApplicantConfirmationHtml() {
+  return `
+  <div style="margin:0; padding:0; background-color:#f4f5f7;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f5f7; padding:32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#ffffff; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
+            <!-- Header with logo top right -->
+            <tr>
+              <td style="padding:24px 32px; border-bottom:1px solid #eef0f3;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td align="right" style="vertical-align:middle;">
+                      <img src="${LOGO_URL}" alt="Creovixa Language Services" width="180" style="display:inline-block; width:180px; max-width:60%; height:auto;" />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <!-- Body -->
+            <tr>
+              <td style="padding:32px; font-family:'Segoe UI', system-ui, -apple-system, Arial, sans-serif; color:#1f2937; font-size:15px; line-height:1.65;">
+                <h1 style="margin:0 0 20px; font-size:20px; font-weight:700; color:#0f172a;">Application Received</h1>
+                <p style="margin:0 0 16px;">Dear Applicant,</p>
+                <p style="margin:0 0 16px;">Thank you for your interest in joining Creovixa Language Services.</p>
+                <p style="margin:0 0 16px;">We have successfully received your application and supporting documents. Our recruitment team will carefully review your qualifications.</p>
+                <p style="margin:0 0 16px;">If your profile matches our current opportunities, we will contact you regarding the next steps.</p>
+                <p style="margin:24px 0 4px;">Best regards,</p>
+                <p style="margin:0; font-weight:600; color:#0f172a;">Creovixa Recruitment Team</p>
+                <p style="margin:4px 0 0;">
+                  <a href="mailto:recruitement@creovixa.com" style="color:#2563eb; text-decoration:none;">recruitement@creovixa.com</a>
+                </p>
+                <p style="margin:2px 0 0;">
+                  <a href="${SITE_URL}" style="color:#2563eb; text-decoration:none;">www.creovixa.com</a>
+                </p>
+              </td>
+            </tr>
+            <!-- Footer -->
+            <tr>
+              <td style="padding:18px 32px; background-color:#0f172a; font-family:'Segoe UI', system-ui, -apple-system, Arial, sans-serif;">
+                <p style="margin:0; font-size:12px; color:#cbd5e1;">© ${new Date().getFullYear()} Creovixa Language Services. All rights reserved.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  `
+}
+
+function buildApplicantConfirmationText() {
+  return [
+    'Dear Applicant,',
+    '',
+    'Thank you for your interest in joining Creovixa Language Services.',
+    '',
+    'We have successfully received your application and supporting documents. Our recruitment team will carefully review your qualifications.',
+    '',
+    'If your profile matches our current opportunities, we will contact you regarding the next steps.',
+    '',
+    'Best regards,',
+    '',
+    'Creovixa Recruitment Team',
+    'recruitement@creovixa.com',
+    'www.creovixa.com',
+  ].join('\n')
 }
 
 async function saveApplicantRecord(
