@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { createServiceClient } from '@/lib/supabase/service'
 
 export const runtime = 'nodejs'
 
@@ -58,6 +59,8 @@ export async function POST(request: Request) {
 
   // Optional résumé attachment
   const attachments: { filename: string; content: Buffer }[] = []
+  let resumeFile: File | null = null
+  let resumeBuffer: Buffer | null = null
   const resume = formData.get('resume')
   if (resume && resume instanceof File && resume.size > 0) {
     if (resume.size > MAX_RESUME_BYTES) {
@@ -67,6 +70,8 @@ export async function POST(request: Request) {
       )
     }
     const buffer = Buffer.from(await resume.arrayBuffer())
+    resumeFile = resume
+    resumeBuffer = buffer
     attachments.push({ filename: resume.name || 'resume', content: buffer })
   }
 
@@ -131,5 +136,82 @@ export async function POST(request: Request) {
     )
   }
 
+  // Best-effort: also record the applicant in the admin interpreter database.
+  // The email above is the primary delivery path, so DB/storage issues here
+  // must never fail the applicant's submission.
+  await saveApplicantRecord(fields, resumeFile, resumeBuffer)
+
   return NextResponse.json({ ok: true })
+}
+
+async function saveApplicantRecord(
+  fields: {
+    fullName: string
+    email: string
+    phone: string
+    languages: string
+    experience: string
+    modality: string
+    location: string
+    availability: string
+    certifications: string
+  },
+  resumeFile: File | null,
+  resumeBuffer: Buffer | null,
+) {
+  try {
+    const supabase = createServiceClient()
+    if (!supabase) {
+      console.log('[v0] Service client unavailable; skipping applicant record')
+      return
+    }
+
+    const { data: inserted, error: insertError } = await supabase
+      .from('interpreters')
+      .insert({
+        full_name: fields.fullName,
+        email: fields.email,
+        phone: fields.phone || null,
+        language_pairs: fields.languages || null,
+        availability: fields.availability || null,
+        experience: fields.experience || null,
+        modality: fields.modality || null,
+        location: fields.location || null,
+        certifications: fields.certifications || null,
+        status: 'New Applicant',
+        source: 'application_form',
+      })
+      .select('id')
+      .single()
+
+    if (insertError || !inserted) {
+      console.log('[v0] Applicant record insert error:', insertError?.message)
+      return
+    }
+
+    if (resumeFile && resumeBuffer) {
+      const ext = resumeFile.name.split('.').pop()?.toLowerCase() ?? 'pdf'
+      const path = `${inserted.id}/${Date.now()}.${ext}`
+      const { error: uploadError } = await supabase.storage
+        .from('resumes')
+        .upload(path, resumeBuffer, {
+          contentType: resumeFile.type || 'application/octet-stream',
+          upsert: false,
+        })
+
+      if (uploadError) {
+        console.log('[v0] Applicant resume upload error:', uploadError.message)
+      } else {
+        await supabase
+          .from('interpreters')
+          .update({ resume_path: path })
+          .eq('id', inserted.id)
+      }
+    }
+  } catch (err) {
+    console.log(
+      '[v0] saveApplicantRecord unexpected error:',
+      err instanceof Error ? err.message : String(err),
+    )
+  }
 }
