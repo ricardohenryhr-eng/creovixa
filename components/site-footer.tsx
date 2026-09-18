@@ -1,23 +1,40 @@
-import Link from 'next/link'
-import { Mail, Phone } from 'lucide-react'
-import { SiteLogo } from '@/components/site-logo'
+import { Globe, Mail, Phone } from 'lucide-react'
+import { CookiePreferencesButton } from '@/components/cookie-preferences-button'
 
 const footerGroups = [
   {
+    heading: 'Services',
+    links: [
+      { label: 'French Interpretation', href: '/french-interpretation-services' },
+      {
+        label: 'Haitian Creole Interpretation',
+        href: '/haitian-creole-interpretation-services',
+      },
+      { label: 'Medical Interpretation', href: '/medical-interpretation-services' },
+      { label: 'Legal Interpretation', href: '/legal-interpretation-services' },
+      { label: 'Video Remote Interpretation', href: '/video-remote-interpretation' },
+      {
+        label: 'Over-the-Phone Interpretation',
+        href: '/over-the-phone-interpretation',
+      },
+    ],
+  },
+  {
     heading: 'Company',
     links: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Services', href: '/services' },
-      { label: 'Become an Interpreter', href: '/become-an-interpreter' },
-      { label: 'FAQ', href: '/faq' },
+      { label: 'Home', href: '/' },
+      { label: 'About Us', href: '/#about' },
+      { label: 'Services', href: '/#services' },
+      { label: 'Contact', href: '/#contact' },
+      { label: 'Become an Interpreter', href: '/#contact' },
+      { label: 'info@creovixa.com', href: 'mailto:info@creovixa.com' },
     ],
   },
   {
     heading: 'Legal',
     links: [
       { label: 'Privacy Policy', href: '/privacy-policy' },
-      { label: 'Terms of Service', href: '/terms-of-service' },
-      { label: 'Contact Us', href: '/contact' },
+      { label: 'Cookie Policy', href: '/cookie-policy' },
     ],
   },
 ]
@@ -26,15 +43,20 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <Link href="/" aria-label="Creovixa Language Services home">
-              <SiteLogo markClassName="h-10" nameClassName="text-2xl" />
-            </Link>
+            <a href="/" className="flex items-center gap-2">
+              <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Globe className="size-5" aria-hidden="true" />
+              </span>
+              <span className="font-display text-lg font-bold tracking-tight text-foreground">
+                Creovixa
+              </span>
+            </a>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Bridging languages, connecting people. Qualified professional
-              interpreters and translators, delivered through secure technology
-              for healthcare, legal, government, and business.
+              Connecting people through language. Qualified professional
+              interpreters, delivered through secure technology for healthcare,
+              legal, government, and business.
             </p>
             <ul className="mt-6 space-y-3">
               <li>
@@ -100,14 +122,19 @@ export function SiteFooter() {
               <ul className="mt-4 space-y-3">
                 {group.links.map((link) => (
                   <li key={link.label}>
-                    <Link
+                    <a
                       href={link.href}
                       className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {link.label}
-                    </Link>
+                    </a>
                   </li>
                 ))}
+                {group.heading === 'Legal' ? (
+                  <li>
+                    <CookiePreferencesButton />
+                  </li>
+                ) : null}
               </ul>
             </div>
           ))}
@@ -115,11 +142,10 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Creovixa Language Services. All
-            rights reserved.
+            &copy; {new Date().getFullYear()} Creovixa. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
-            Bridging Languages, Connecting People.
+            Connecting People Through Language
           </p>
         </div>
       </div>

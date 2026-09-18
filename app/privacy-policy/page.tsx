@@ -1,62 +1,98 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { PageHero } from '@/components/page-hero'
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
+import { LegalPage, type LegalSection } from '@/components/legal-page'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy',
+  title: 'Privacy Policy | Creovixa Language Services',
   description:
-    'Learn how Creovixa Language Services collects, uses, and protects your personal information, including your rights, cookies, and third-party services.',
+    'How Creovixa Language Services collects, uses, protects, and shares personal information, and the privacy rights available to you under GDPR and CCPA.',
+  alternates: { canonical: '/privacy-policy' },
 }
 
-const lastUpdated = 'August 14, 2026'
-
-const sections = [
+const sections: LegalSection[] = [
   {
-    id: 'information-we-collect',
-    title: 'Information We Collect',
+    heading: 'Overview',
     body: [
-      'We collect information you provide directly to us, such as when you request an interpreter, submit a contact form, apply to join our interpreter network, or communicate with our team. This may include your name, email address, phone number, organization, preferred languages, and any details you include in your message or application.',
-      'We also automatically collect certain technical information when you visit https://www.creovixa.com, including your IP address, browser type, device information, pages viewed, and the dates and times of your visits. This helps us operate, secure, and improve our website and services.',
+      'Creovixa Language Services ("Creovixa", "we", "us", or "our") respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains what information we collect, how we use it, and the rights you have over it.',
+      'This policy applies to www.creovixa.com and the interpretation services we provide. By using our website or services, you agree to the practices described here.',
     ],
   },
   {
-    id: 'how-we-use-information',
-    title: 'How We Use Information',
+    heading: 'Information We Collect',
     body: [
-      'We use the information we collect to deliver and improve our interpretation and translation services, respond to your inquiries, match you with qualified interpreters, process interpreter applications, and communicate with you about your requests.',
-      'We may also use your information to maintain the security of our platform, comply with legal obligations, prevent fraud or misuse, and, where permitted, send you relevant service updates. We do not sell your personal information.',
+      'We collect information you provide directly to us and information collected automatically when you use our website.',
+    ],
+    list: [
+      'Contact details you submit through our forms, such as your name, email address, phone number, organization, and message.',
+      'Service information needed to fulfill interpretation requests, including language pair, industry, and appointment details.',
+      'Technical data such as IP address, browser type, device information, and pages visited, collected only where permitted by your cookie choices.',
     ],
   },
   {
-    id: 'data-protection-and-security',
-    title: 'Data Protection and Security',
-    body: [
-      'We implement appropriate technical and organizational measures designed to protect your personal information against unauthorized access, disclosure, alteration, or destruction. Our platform uses encryption in transit and compliance-ready workflows suited to sensitive healthcare, legal, and government contexts.',
-      'While we work hard to safeguard your data, no method of transmission or storage is completely secure. We continuously review and strengthen our security practices to reduce risk.',
+    heading: 'How We Use Your Information',
+    body: ['We use personal information for the following purposes:'],
+    list: [
+      'To respond to inquiries and provide the interpretation services you request.',
+      'To operate, maintain, and improve our website and services.',
+      'To analyze aggregated, consent-based traffic data to enhance performance and content.',
+      'To comply with legal obligations and protect the security of our services.',
     ],
   },
   {
-    id: 'cookies-and-tracking-technologies',
-    title: 'Cookies and Tracking Technologies',
+    heading: 'Legal Bases for Processing (GDPR)',
     body: [
-      'We use cookies and similar tracking technologies to operate our website, remember your preferences, analyze traffic, and understand how our services are used. Cookies are small data files stored on your device.',
-      'You can control or disable cookies through your browser settings. Please note that disabling certain cookies may affect the functionality and performance of our website.',
+      'If you are located in the European Economic Area or the United Kingdom, we process your personal data on the following legal bases: your consent, the performance of a contract with you, compliance with legal obligations, and our legitimate interests in operating and improving our services.',
     ],
   },
   {
-    id: 'third-party-services',
-    title: 'Third-Party Services',
+    heading: 'Cookies and Tracking',
     body: [
-      'We may use trusted third-party providers to support our operations, such as analytics, hosting, communication, and security services (including reCAPTCHA to protect our forms from abuse). These providers may process limited information on our behalf and are expected to safeguard it appropriately.',
-      'Our website may contain links to third-party sites that we do not control. We are not responsible for the privacy practices of those sites, and we encourage you to review their privacy policies.',
+      'We use cookies and similar technologies as described in our Cookie Policy. Analytics and other non-essential cookies are only set after you grant consent through our cookie banner. You can change your choices at any time using the "Cookie Preferences" link in the footer.',
     ],
   },
   {
-    id: 'user-rights',
-    title: 'User Rights',
+    heading: 'How We Share Information',
     body: [
-      'Depending on your location, you may have rights to access, correct, update, or delete the personal information we hold about you, as well as to object to or restrict certain processing and to withdraw consent where applicable.',
-      'To exercise any of these rights, please contact us using the details below. We will respond in accordance with applicable data protection laws.',
+      'We do not sell your personal information. We share information only with trusted service providers who help us operate our website and deliver services, and only to the extent necessary. We may also disclose information when required by law or to protect our rights.',
+    ],
+  },
+  {
+    heading: 'Data Retention',
+    body: [
+      'We retain personal information only for as long as necessary to fulfill the purposes described in this policy, to comply with legal obligations, resolve disputes, and enforce our agreements.',
+    ],
+  },
+  {
+    heading: 'Your Privacy Rights',
+    body: [
+      'Depending on your location, you may have the right to access, correct, delete, or restrict the use of your personal information, to object to processing, and to data portability.',
+      'Under the California Consumer Privacy Act (CCPA), California residents have the right to know what personal information we collect, to request deletion, and to opt out of the sale of personal information. We do not sell personal information.',
+      'To exercise any of these rights, contact us at info@creovixa.com. We will respond in accordance with applicable law.',
+    ],
+  },
+  {
+    heading: 'Data Security',
+    body: [
+      'We implement appropriate technical and organizational measures to protect personal information against unauthorized access, loss, or misuse. No method of transmission over the internet is completely secure, but we work to safeguard your data.',
+    ],
+  },
+  {
+    heading: "Children's Privacy",
+    body: [
+      'Our website and services are not directed to children under 16, and we do not knowingly collect personal information from children.',
+    ],
+  },
+  {
+    heading: 'Changes to This Policy',
+    body: [
+      'We may update this Privacy Policy from time to time. Material changes will be reflected by updating the "Last updated" date above and, where appropriate, by re-requesting your cookie consent.',
+    ],
+  },
+  {
+    heading: 'Contact Us',
+    body: [
+      'If you have questions about this Privacy Policy or your personal information, contact us at info@creovixa.com.',
     ],
   },
 ]
@@ -64,94 +100,16 @@ const sections = [
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Legal"
-        title="Privacy Policy"
-        description="This Privacy Policy explains how Creovixa Language Services collects, uses, and protects your information when you use our website and services."
-      />
-
-      <section className="bg-background py-16 lg:py-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-muted-foreground">
-            Last updated: {lastUpdated}
-          </p>
-
-          <div className="mt-10 flex flex-col gap-12">
-            {sections.map((section, index) => (
-              <div key={section.id} id={section.id} className="scroll-mt-24">
-                <h2 className="font-display text-2xl font-bold tracking-tight text-foreground">
-                  <span className="text-primary">{index + 1}.</span>{' '}
-                  {section.title}
-                </h2>
-                <div className="mt-4 flex flex-col gap-4">
-                  {section.body.map((paragraph, i) => (
-                    <p
-                      key={i}
-                      className="text-base leading-relaxed text-pretty text-muted-foreground"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            {/* Contact Information */}
-            <div id="contact-information" className="scroll-mt-24">
-              <h2 className="font-display text-2xl font-bold tracking-tight text-foreground">
-                <span className="text-primary">{sections.length + 1}.</span>{' '}
-                Contact Information
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-pretty text-muted-foreground">
-                If you have any questions about this Privacy Policy or how we
-                handle your information, please contact us:
-              </p>
-              <div className="mt-5 rounded-2xl border border-border bg-card p-6">
-                <dl className="flex flex-col gap-3 text-sm">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:gap-2">
-                    <dt className="font-semibold text-foreground">Company:</dt>
-                    <dd className="text-muted-foreground">
-                      Creovixa Language Services
-                    </dd>
-                  </div>
-                  <div className="flex flex-col gap-1 sm:flex-row sm:gap-2">
-                    <dt className="font-semibold text-foreground">Website:</dt>
-                    <dd>
-                      <a
-                        href="https://www.creovixa.com"
-                        className="text-primary transition-colors hover:text-primary/80"
-                      >
-                        https://www.creovixa.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="flex flex-col gap-1 sm:flex-row sm:gap-2">
-                    <dt className="font-semibold text-foreground">Email:</dt>
-                    <dd>
-                      <a
-                        href="mailto:info@creovixa.com"
-                        className="text-primary transition-colors hover:text-primary/80"
-                      >
-                        info@creovixa.com
-                      </a>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-              <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-                See also our{' '}
-                <Link
-                  href="/terms-of-service"
-                  className="font-medium text-primary transition-colors hover:text-primary/80"
-                >
-                  Terms of Service
-                </Link>
-                .
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <SiteHeader />
+      <main>
+        <LegalPage
+          title="Privacy Policy"
+          intro="Your privacy matters to us. This policy explains how Creovixa Language Services handles personal information and the rights you have under GDPR and CCPA."
+          lastUpdated="August 15, 2026"
+          sections={sections}
+        />
+      </main>
+      <SiteFooter />
     </>
   )
 }
